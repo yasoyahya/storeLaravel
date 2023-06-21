@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Admin\CategoryRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -18,37 +19,38 @@ class CategoryController extends Controller
         if (request()->ajax()) {
             $query = Category::query();
 
-            return DataTables::of($query)
-                ->addColumn('action', function ($item) {
-                    return '
-                            <div class="btn-group">
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle mr-1 mb-1"
-                                            type="button"
-                                            data-toggle="dropdown">
+            return Datatables::of($query)
+            ->addColumn('action', function ($item) {
+                return '
+                        <div class="btn-group">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                    type="button" id="action' .  $item->id . '"
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
                                         Aksi
-                                    </button>
-                                <div class="dropdown-menu">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
                                     <a class="dropdown-item" href="/admin/category/edit{{ $item->id }}">
                                         Sunting
                                     </a>
-                                <form action="/admin/category/destroy{{ $item->id }}" method="POST">
-                                    ' . method_field('delete') . csrf_field() . '
-                                    <button type="submit" class="dropdown-item text-danger">
-                                        Hapus
-                                    </button>
-                                </form>
-                                </div>
+                                    <form action="/admin/category/destroy{{ $item->id }}" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                        ';
-                })
-                ->editColumn('photo', function($item){
-                    return $item->photo ? '<img src="'. Storage::url($item->photo) .'" style="max-height: 40px" />' : '';
-                })
-                ->rawColumn(['action','photo'])
+                    </div>';
+            })
+            ->editColumn('photo', function ($item) {
+                return $item->photo ? '<img src="' . Storage::url($item->photo) . '" style="max-height: 40px;"/>' : '';
+            })
+                ->rawColumns(['action', 'photo'
+                ])
                 ->make();
-                ;
         }
 
         return view('pages.admin.category.index');
@@ -59,13 +61,13 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.category.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         //
     }
@@ -89,7 +91,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         //
     }
