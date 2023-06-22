@@ -25,10 +25,10 @@
                     <img src="/images/admin.png" alt="" class="my-4" style="max-width: 150px">
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="/admin" class="list-group-item list-group-item-action {{ (request()->is('admin ')) ? 'active' : '' }}">
+                    <a href="/admin" class="list-group-item list-group-item-action {{ (request()->is('admin')) ? 'active' : '' }}">
                         Dashboard
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="/admin/product" class="list-group-item list-group-item-action {{ (request()->is('admin/product*')) ? 'active' : '' }}">
                         Products
                     </a>
                     <a href="/admin/category" class="list-group-item list-group-item-action {{ (request()->is('admin/category*')) ? 'active' : '' }}">
@@ -37,7 +37,7 @@
                     <a href="#" class="list-group-item list-group-item-action">
                         Transactions
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="/admin/user" class="list-group-item list-group-item-action {{ (request()->is('admin/user*')) ? 'active' : '' }} ">
                         Users
                     </a>
                     <a href="/index-account.html" class="list-group-item list-group-item-action">
