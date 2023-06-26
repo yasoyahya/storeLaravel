@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories');
+Route::get('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'detail'])->name('categories-detail');
 Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'index'])->name('detail');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])->name('success');
@@ -32,7 +33,7 @@ Route::get('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductCon
 Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])->name('dashboard-transactions');
 Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])->name('dashboard-transaction-details');
 Route::get('/dashboard/settings', [App\Http\Controllers\DashboardSettingController::class, 'store'])->name('dashboard-settings-store');
-Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])->name('dashboard-settings-store');
+Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])->name('dashboard-settings-account');
 
 // ->middleware(['auth','admin'])
 Route::prefix('admin')
@@ -60,6 +61,12 @@ Route::prefix('admin')
         Route::get('/product/edit{slug}', [App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin-product-edit');
         Route::put('/product/update{slug}', [App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin-product-update');
         Route::post('/product/destroy{slug}', [App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('admin-product-destroy');
+        // Route::resource('product-gallery','ProductGalleryController');
+        Route::get('/product-gallery', [App\Http\Controllers\Admin\ProductGalleryController::class, 'index'])->name('admin-product-gallery');
+        Route::get('/product-gallery/create', [App\Http\Controllers\Admin\ProductGalleryController::class, 'create'])->name('admin-product-gallery-create');
+        Route::post('/product-gallery/store', [App\Http\Controllers\Admin\ProductGalleryController::class, 'store'])->name('admin-product-gallery-store');
+        Route::post('/product-gallery/destroy{id}', [App\Http\Controllers\Admin\ProductGalleryController::class, 'destroy'])->name('admin-product-gallery-destroy');
+
     });
 
 Auth::routes();
