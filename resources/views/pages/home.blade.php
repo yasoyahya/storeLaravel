@@ -45,7 +45,7 @@
                     @forelse ($categories as $category)
                         <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up"
                             data-aos-delay="{{ $incrementCategory += 100 }}">
-                            <a href="/categories/{{ $category->id }}" class="component-categories d-block">
+                            <a href="/categories/{{ $category->slug }}" class="component-categories d-block">
                                 <div class="categories-image">
                                     <img src="{{ Storage::url($category->photo) }}" alt="" class="w-100">
                                 </div>
@@ -75,7 +75,7 @@
                     @forelse ($products as $product)
                         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up"
                             data-aos-delay="{{ $incrementProduct += 100 }}">
-                            <a href="/details/{{ $product->id }}" class="component-products d-block">
+                            <a href="/details/{{ $product->slug }}" class="component-products d-block">
                                 <div class="products-thumbnail">
                                     <div class="products-image"
                                         style="

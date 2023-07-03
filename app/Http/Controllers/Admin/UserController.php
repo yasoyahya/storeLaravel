@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\UserRequest;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+
+
 
 class UserController extends Controller
 {
@@ -58,9 +59,25 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    // Fungsi untu Register akun User
+    public function create(Request $data)
     {
-        return view('pages.admin.user.create');
+        $data = array(
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'store_name' => isset($data['store_name']) ? $data['store_name'] : null,
+            'categories_id' => isset($data['categories_id']) ? $data['categories_id'] : null,
+            'store_status' => isset($data['is_store_open']) ? 1 : null,
+        );
+        User::insert($data);
+        return view('auth.login');
+    }
+
+    // Fungsi untuk pengecekan email saaat register / API Check
+    public function check(Request $request)
+    {
+        return User::where('email', $request->email)->count() > 0 ? 'Unavailable' : 'Available';
     }
 
     /**
