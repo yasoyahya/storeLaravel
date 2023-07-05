@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class TransactionDetail extends Model
 {
     use HasFactory;
     /**
@@ -14,11 +14,11 @@ class Transaction extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'users_id',
-        'insurance_price',
-        'shipping_price',
-        'total_price',
-        'transaction_status',
+        'transactions_id',
+        'products_id',
+        'price',
+        'shipping_status',
+        'resi',
         'code',
     ];
 
@@ -27,12 +27,15 @@ class Transaction extends Model
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        
-    ];
+    protected $hidden = [];
 
-    public function user()
+    public function product()
     {
-        return $this->belongsTo(User::class, 'users_id','id');
+        return $this->hasOne(Product::class, 'id', 'products_id');
     }
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class, 'id', 'transactions_id');
+    }
+
 }
