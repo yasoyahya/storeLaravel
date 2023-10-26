@@ -8,7 +8,7 @@
     <meta name="author" content="" />
 
     <title>@yield('title')</title>
-    @stack('prepend-style') 
+    @stack('prepend-style')
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link href="/style/main.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
@@ -37,7 +37,7 @@
                     <a href="/admin/category" class="list-group-item list-group-item-action {{ (request()->is('admin/category*')) ? 'active' : '' }}">
                         Categories
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="/admin/transaction" class="list-group-item list-group-item-action {{ (request()->is('admin/category*')) ? 'active' : '' }}">
                         Transactions
                     </a>
                     <a href="/admin/user" class="list-group-item list-group-item-action {{ (request()->is('admin/user*')) ? 'active' : '' }} ">

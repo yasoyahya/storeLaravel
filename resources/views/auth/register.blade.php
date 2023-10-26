@@ -252,8 +252,8 @@
             },
             data() {
                 return {
-                    name: "Angga Hazza Sett",
-                    email: "kamujagoan@bwa.id",
+                    name: "",
+                    email: "",
                     is_store_open: true,
                     store_name: "",
                     email_unavailable: false,

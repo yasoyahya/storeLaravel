@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\Admin\ProductGalleryRequest;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
-use App\Models\User;
-use App\Models\Category;
-use App\Models\ProductGallery;
 
-class ProductGalleryController extends Controller
+
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +16,7 @@ class ProductGalleryController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = ProductGallery::with(['product']);
+            $query = Transaction::with(['user']);
 
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
@@ -36,7 +31,10 @@ class ProductGalleryController extends Controller
                                         Aksi
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
-                                    <form action="/admin/product-gallery/destroy ' . $item->id . ' " method="POST">
+                                    <a class="dropdown-item" href="/admin/transaction/edit ' . $item->id . ' ">
+                                        Sunting
+                                    </a>
+                                    <form action="/admin/transaction/destroy ' . $item->id . ' " method="POST">
                                         ' . method_field('post') . csrf_field() . '
                                         <button type="submit" class="dropdown-item text-danger">
                                             Hapus
@@ -46,14 +44,13 @@ class ProductGalleryController extends Controller
                             </div>
                     </div>';
                 })
-                ->editColumn('photos', function($item){
-                    return $item->photos ? ' <img src="'. Storage::url($item->photos) .'" style="max-height: 80px;" /> ' : '';
-                })
-                ->rawColumns(['action','photos'])
+                ->rawColumns([
+                    'action',
+                ])
                 ->make();
         }
 
-        return view('pages.admin.product-gallery.index');
+        return view('pages.admin.transaction.index');
     }
 
     /**
@@ -61,25 +58,15 @@ class ProductGalleryController extends Controller
      */
     public function create()
     {
-        $products = Product::all();
-
-        return view('pages.admin.product-gallery.create',[
-            'products' => $products,
-        ]);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductGalleryRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-
-            
-
-        ProductGallery::create($data);
-
-        return view('pages.admin.product-gallery.index');
+        //
     }
 
     /**
@@ -95,15 +82,23 @@ class ProductGalleryController extends Controller
      */
     public function edit(string $id)
     {
-       //
+        $item = Transaction::findOrFail($id);
+
+        return view('pages.admin.transaction.edit', [
+            'item' => $item,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductGalleryRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
-       //
+        $data = $request->all();
+        $item = Transaction::findOrFail($id);
+        $item->update($data);
+
+        return view('pages.admin.transaction.index');
     }
 
     /**
@@ -111,9 +106,9 @@ class ProductGalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = ProductGallery::findOrFail($id);
+        $item = Transaction::findOrFail($id);
         $item->delete();
 
-        return view('pages.admin.product-gallery.index');
+        return view('pages.admin.transaction.index');
     }
 }

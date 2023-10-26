@@ -71,7 +71,7 @@ Route::prefix('admin')
         Route::get('/category/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('admin-category-create');
         Route::post('/category/store', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('admin-category-store');
         Route::get('/category/edit{slug}', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('admin-category-edit');
-        Route::put('/category/update{slug}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('admin-category-update');
+        Route::put('/category/update{slug}', [App\Http\Controllers\Admin\CategoryController::class, 'upda   te'])->name('admin-category-update');
         Route::post('/category/destroy{slug}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('admin-category-destroy');
         // Route::resource('user','UserController');
         Route::get('/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin-user');
@@ -92,6 +92,9 @@ Route::prefix('admin')
         Route::get('/product-gallery/create', [App\Http\Controllers\Admin\ProductGalleryController::class, 'create'])->name('admin-product-gallery-create');
         Route::post('/product-gallery/store', [App\Http\Controllers\Admin\ProductGalleryController::class, 'store'])->name('admin-product-gallery-store');
         Route::post('/product-gallery/destroy{id}', [App\Http\Controllers\Admin\ProductGalleryController::class, 'destroy'])->name('admin-product-gallery-destroy');
+        // Route::resource('transaction','TransactionController');
+        Route::get('/transaction', [App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('admin-transaction');
+        Route::get('/transaction/edit{id}', [App\Http\Controllers\Admin\TransactionController::class, 'edit'])->name('admin-transaction-edit');
 
     });
 
